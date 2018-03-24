@@ -2,20 +2,37 @@ var gpio = require("rpi-gpio");
 
 module.exports = function(app, db) {
   app.get('/led/:id', (req, res) => {
-    console.log("in get");
-    gpio.setup(40, gpio.DIR_OUT, function(err) {		// Open pin 40 for output
-      console.log("after setup err:" + err);
-    	gpio.write(40, true, function(err) {			// Set pin 40 high (1)
-        console.log("after write err:" + err);
+    const id = req.params.id;
+    console.log("in get turning on pin " + id);
+    gpio.setup(id, gpio.DIR_OUT, function(err) {		// Open pin for output
+      if(err) {
+        console.log("after setup err: " + err);
+        return;
+      }
+    	gpio.write(id, true, function(err) {			// Set pin high (1)
+        if(err) {
+          console.log("after write err: " + err);
+          return;
+        }
     	});
     });
-    res.send('turning on led ' + req.params.id)
+    res.send('turning on led ' + id)
   });
   app.post('/led/:id', (req, res) => {
-    gpio.setup(40, gpio.DIR_OUT, function(err) {		// Open pin 40 for output
-    	gpio.write(40, false, function() {			// Set pin 40 low (0)
+    const id = req.params.id;
+    console.log("in post turning on pin " + id);
+    gpio.setup(id, gpio.DIR_OUT, function(err) {		// Open pin for output
+      if(err) {
+        console.log("after setup err: " + err);
+        return;
+      }
+    	gpio.write(id, false, function(err) {			// Set pin low (0)
+        if(err) {
+          console.log("after write err: " + err);
+          return;
+        }
     	});
     });
-    res.send('turning off led ' + req.params.id)
+    res.send('turning off led ' + id)
   });
 };
