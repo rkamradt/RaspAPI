@@ -23,6 +23,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "rpi-gpio": "^0.9.1"
+    "rpi-gpio": "^0.9.1",
+    "wiring-pi": "^2.2.1"
   }
 }
